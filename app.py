@@ -2,6 +2,15 @@ import os
 import pandas as pd
 import streamlit as st
 
+# Custom Open Graph meta tags for the preview
+st.markdown("""
+    <meta property="og:title" content="It is October 7th All Over Again" />
+    <meta property="og:description" content="A space for all of us. Data Visualization and Safe Space." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/Sashaglattporteny/October7/main/IMG_6685.jpg" />
+    <meta property="og:url" content="https://your-app-url.com" />
+    <meta name="twitter:card" content="summary_large_image">
+""", unsafe_allow_html=True)
+
 # CSV file to store data
 csv_file = 'feelings_data.csv'
 
@@ -9,20 +18,15 @@ csv_file = 'feelings_data.csv'
 def load_data(csv_file):
     if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
         try:
-            # Try reading the CSV file
             df = pd.read_csv(csv_file)
             if df.empty or df.columns.size == 0:
                 raise ValueError("CSV file is empty or corrupted")
         except (pd.errors.EmptyDataError, ValueError):
-            # If CSV file is empty or corrupted, initialize a new DataFrame with columns
             df = pd.DataFrame(columns=["Message", "Nationality", "Age", "Name"])
     else:
-        # If the file doesn't exist or is empty, create a new DataFrame with the correct columns
         df = pd.DataFrame(columns=["Message", "Nationality", "Age", "Name"])
-    
     return df
 
-# Load the data
 df = load_data(csv_file)
 
 # Function to save data to CSV
@@ -35,8 +39,7 @@ def save_to_csv(message, nationality, age, name):
 st.markdown("<h1 style='text-align: center;'>It's 7 of October All Over Again 🎗️</h1>", unsafe_allow_html=True)
 st.markdown("""
 <p style="text-align: center; color: white;">
-This is a space for all of us to remember the names and also share whatever we are feeling today. 
-Together, we are stronger.
+This is a space for all of us to remember the names and also share whatever we are feeling today. Together, we are stronger.
 </p>
 """, unsafe_allow_html=True)
 
@@ -66,7 +69,7 @@ if submit_button and message and nationality:
     save_to_csv(message, nationality, age, name)
     st.success("Your message has been shared!")
 
-# Function to generate compact card design without repeated "Name:"
+# Function to generate compact card design
 def generate_card(message, nationality, age, name):
     name_display = f"<p style='color: black;'><strong>Name:</strong> {name}</p>" if name else ""
     return f"""
@@ -75,15 +78,15 @@ def generate_card(message, nationality, age, name):
         padding: 15px;
         border-radius: 15px;
         box-shadow: 3px 3px 15px rgba(0,0,0,0.1);
-        max-width: 400px;  /* Set max-width for the card */
-        min-height: 150px;  /* Set minimum height */
+        max-width: 400px;
+        min-height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         text-align: left;
         margin: 10px;
         color: black;
-        word-wrap: break-word;  /* Ensure text wraps nicely */
+        word-wrap: break-word;
     ">
         <p style="font-size: 1em; margin: 0 0 10px; color: black;">{message}</p>
         <p style="font-size: 0.9em; margin: 0; color: black;"><strong>Nationality:</strong> {nationality}, <strong>Age:</strong> {age}</p>
@@ -94,9 +97,8 @@ def generate_card(message, nationality, age, name):
 # Displaying the entries as compact cards
 st.subheader("What other people are thinking")
 
-if not df.empty:  # Check if DataFrame has any entries
+if not df.empty:
     for index, row in df.iterrows():
-        name_display = f"<strong>Name:</strong> {row['Name']}" if pd.notna(row['Name']) else ""
         st.markdown(generate_card(row['Message'], row['Nationality'], row['Age'], row['Name']), unsafe_allow_html=True)
 else:
     st.write("No entries yet. Be the first to share your thoughts!")
