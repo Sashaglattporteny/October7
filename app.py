@@ -51,11 +51,11 @@ components.html("""
     """, height=600)
 
 # Space for sharing thoughts
-st.subheader("This is a space for you to share")
+st.subheader("This is a space for you")
 
 # Form to collect user input
 with st.form(key='feeling_form'):
-    message = st.text_input("What's on your mind 💭 or your heart ❤️‍🩹 today?")
+    message = st.text_input("What's on your mind or your heart?")
     nationality = st.selectbox("Where are you from?", ["🇺🇸 United States", "🇨🇦 Canada", "🇲🇽 Mexico"])
     age = st.number_input("How old are you?", min_value=1, max_value=120, step=1)
     name = st.text_input("Optional: Your name")
@@ -66,7 +66,7 @@ if submit_button and message and nationality:
     save_to_csv(message, nationality, age, name)
     st.success("Your message has been shared!")
 
-# Function to generate compact card design (without the "What's on your mind" label)
+# Function to generate compact card design without repeated "Name:"
 def generate_card(message, nationality, age, name):
     name_display = f"<p style='color: black;'><strong>Name:</strong> {name}</p>" if name else ""
     return f"""
@@ -91,12 +91,18 @@ def generate_card(message, nationality, age, name):
     </div>
     """
 
-# Displaying the entries as compact cards (without the "What's on your mind" label)
-st.subheader("What other people are feeling ❤️‍🩹")
+# Displaying the entries as compact cards
+st.subheader("What other people are thinking")
 
 if not df.empty:  # Check if DataFrame has any entries
     for index, row in df.iterrows():
         name_display = f"<strong>Name:</strong> {row['Name']}" if pd.notna(row['Name']) else ""
-        st.markdown(generate_card(row['Message'], row['Nationality'], row['Age'], name_display), unsafe_allow_html=True)
+        st.markdown(generate_card(row['Message'], row['Nationality'], row['Age'], row['Name']), unsafe_allow_html=True)
 else:
     st.write("No entries yet. Be the first to share your thoughts!")
+
+# Footer
+st.markdown("""
+    <hr>
+    <p style="text-align: center; color: white;">This app was made by Sasha Glatt</p>
+""", unsafe_allow_html=True)
