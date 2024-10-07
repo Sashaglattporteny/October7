@@ -59,7 +59,16 @@ st.subheader("This is a space for you")
 # Form to collect user input
 with st.form(key='feeling_form'):
     message = st.text_input("What's on your mind or your heart?")
-    nationality = st.selectbox("Where are you from?", ["🇺🇸 United States", "🇨🇦 Canada", "🇲🇽 Mexico"])
+    
+    # Adding more countries, especially from Latin America
+    nationality = st.selectbox("Where are you from?", [
+        "🇺🇸 United States", "🇨🇦 Canada", "🇲🇽 Mexico", "🇮🇱 Israel", "🇦🇷 Argentina", 
+        "🇧🇷 Brazil", "🇨🇱 Chile", "🇨🇴 Colombia", "🇨🇷 Costa Rica", "🇩🇴 Dominican Republic",
+        "🇪🇨 Ecuador", "🇸🇻 El Salvador", "🇬🇹 Guatemala", "🇭🇳 Honduras", "🇵🇦 Panama", 
+        "🇵🇾 Paraguay", "🇵🇪 Peru", "🇵🇷 Puerto Rico", "🇺🇾 Uruguay", "🇻🇪 Venezuela", 
+        "🇧🇴 Bolivia", "🇨🇺 Cuba", "🇳🇮 Nicaragua"
+    ])
+    
     age = st.number_input("How old are you?", min_value=1, max_value=120, step=1)
     name = st.text_input("Optional: Your name")
     submit_button = st.form_submit_button(label="Share")
@@ -108,3 +117,4 @@ st.markdown("""
     <hr>
     <p style="text-align: center; color: white;">This app was made by Sasha Glatt</p>
 """, unsafe_allow_html=True)
+
