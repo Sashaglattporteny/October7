@@ -4,7 +4,7 @@ import streamlit as st
 
 # Custom Open Graph meta tags for the preview
 st.markdown("""
-    <meta property="og:title" content="It is October 7th All Over Again" />
+    <meta property="og:title" content="07/10 All Over Again 🎗️" />
     <meta property="og:description" content="A space for all of us. Data Visualization and Safe Space." />
     <meta property="og:image" content="https://raw.githubusercontent.com/Sashaglattporteny/October7/main/IMG_6685.jpg" />
     <meta property="og:url" content="https://your-app-url.com" />
